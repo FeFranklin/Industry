@@ -1,9 +1,7 @@
-// import logger from '@/config/logger'
 import { Store } from '../models/store.model'
 import ApiError from '../utils/ApiError'
 import express from 'express'
 import httpStatus from 'http-status'
-// import { authenticate } from 'passport'
 
 const router = express.Router()
 
