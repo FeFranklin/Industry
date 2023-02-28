@@ -22,7 +22,6 @@ export const AssetsHealthHistoryChart = ({data}:{data: (HealthHistoryEntity)[] |
     <HighchartsProvider Highcharts={Highcharts}>
       <HighchartsChart plotOptions={plotOptions}>
         <Chart type='spline' />
-        <Title>Health History</Title>
         <XAxis type='datetime' labels={{format: '{value:%Y-%b-%e}'}}>
           <XAxis.Title>Date of data collection</XAxis.Title>
         </XAxis>

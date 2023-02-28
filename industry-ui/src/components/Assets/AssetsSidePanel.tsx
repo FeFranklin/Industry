@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Statistic, Space, Skeleton } from 'antd';
+import React from 'react';
+import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Statistic, Space, Divider, Collapse } from 'antd';
 import SlidingPanel from 'react-sliding-side-panel';
 import moment from 'moment';
 import { AssetsHealthHistoryChart } from './AssetsHealthHistoryChart';
 import { AssetsDataType, HealthStatus } from '@/types/types';
 
 const { Title: TextTitle, Text } = Typography;
+const { Panel } = Collapse;
 
 const AssetsSidePanel = ({
   openPanel,
@@ -36,14 +37,15 @@ const AssetsSidePanel = ({
       >
         <div className='panel-container'>
           <Button type='primary' className='panel-button' onClick={() => setOpenPanel(false)} danger>close</Button>
-          <TextTitle level={3}>{selectedItem?.name}</TextTitle>
           <Image
+            className='panel-image-container'
             height={300}
             src={selectedItem?.image}
             alt="Image of the selected motor"
             preview={false}
             placeholder={true}
           />
+          <Divider>Data about {selectedItem?.name}</Divider>
           <div className='specifications-container'>
             <div className='health-score'>
               <Progress
@@ -61,10 +63,13 @@ const AssetsSidePanel = ({
               </Descriptions>
             </div>
           </div>
+          <Divider>Health history chart for {selectedItem?.name}</Divider>
           <div className='health-history-chart-container'>
             <AssetsHealthHistoryChart data={selectedItem?.healthHistory}/>
           </div>
           <div className='metrics-container'>
+          <Collapse>
+            <Panel header="Click here to see more Metrics!" key="1">
             {metrics?.length > 0 && (
             <>
               <Space direction="vertical" size="small" style={{ display: 'flex' }}>
@@ -117,6 +122,8 @@ const AssetsSidePanel = ({
               </Space>
             </>
             )}
+            </Panel>
+          </Collapse>
           </div>
         </div>
       </SlidingPanel>

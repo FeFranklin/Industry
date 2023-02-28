@@ -148,3 +148,9 @@ a {
 .metrics-container {
   width: 100%;
 }
+
+.panel-image-container {
+  border-radius: 10%;
+  border: 5px solid #001529;
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.3);
+}
