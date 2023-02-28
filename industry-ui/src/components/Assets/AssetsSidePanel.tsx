@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Typography, Progress } from 'antd';
+import { Button, Image, Typography, Progress, Descriptions } from 'antd';
 import SlidingPanel from 'react-sliding-side-panel';
 import Highcharts from 'highcharts'
 import {
@@ -61,30 +61,32 @@ const AssetsSidePanel = ({
       <SlidingPanel
         type={'right'}
         isOpen={openPanel}
-        size={50}
+        size={40}
       >
         <div className='panel-container'>
           <Button type='primary' className='panel-button' onClick={() => setOpenPanel(false)} danger>close</Button>
           <TextTitle level={3}>{selectedItem?.name}</TextTitle>
           <Image
-            width={500}
+            height={400}
             src={selectedItem?.image}
             alt="Image of the selected motor"
             preview={false}
-            style={{ margin: '2rem 0'}}
           />
-          <TextTitle level={4}>specificaitons</TextTitle>
           <div className='specifications-container'>
-            <div className='specifications'>
-              {selectedItem?.specifications && specifications?.map((spec) => <Text key={spec?.label}>{spec?.label}: {spec?.value ?? 'no data'}</Text>)}
-            </div>
             <div className='health-score'>
               <Progress
                 type="dashboard"
                 strokeLinecap="butt"
                 percent={selectedItem?.healthscore}
               />
-              <Text>health score</Text>
+              <Text type="secondary" style={{textAlign: 'center'}}>health score</Text>
+            </div>
+            <div className='specifications'>
+              <Descriptions title="Specificaitons">
+                {selectedItem?.specifications && specifications?.map((spec) => (
+                  <Descriptions.Item key={spec.label} label={spec.label}>{spec.value ?? 'no data'}</Descriptions.Item>
+                ))}
+              </Descriptions>
             </div>
           </div>
           {/* <HighchartsProvider Highcharts={Highcharts}>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Space, Table, Tag, Button } from 'antd';
+import { Space, Table, Tag, Button, Badge, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 export interface DataType {
@@ -30,6 +30,17 @@ export interface Specifications {
   maxTemp: number;
 }
 
+enum Status {
+  inOperation = "processing",
+  inAlert = "error",
+  inDowntime = "warning"
+}
+
+const getStatus = (status: string) => {
+  return Status[status as keyof typeof Status]
+}
+
+const { Title } = Typography;
 
 const AssetsTable = ({
   data,
@@ -82,7 +93,10 @@ const AssetsTable = ({
     {
       title: 'status',
       key: 'status',
-      dataIndex: 'status'
+      dataIndex: 'status',
+      render: (_, record, index) => (
+        <Badge status={getStatus(record?.status)} text={record?.status} />
+      ),
     },
     {
       title: 'Action',
@@ -102,7 +116,12 @@ const AssetsTable = ({
     },
   ]
 
-  return <Table columns={columns} dataSource={data} />
+  return (
+  <>
+    <Title level={2}>Assets</Title>
+    <Table columns={columns} dataSource={data} />
+  </>
+  )
 }
 
 export default AssetsTable;
