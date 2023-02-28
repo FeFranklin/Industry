@@ -35,7 +35,7 @@ enum Priority {
 const getPriority = (priority: string) => Priority[priority as keyof typeof Priority ?? 'default']
 
 const Workorders = () => {
-  const [data, setData] = useState<DataType>()
+  const [data, setData] = useState<DataType[]>()
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {

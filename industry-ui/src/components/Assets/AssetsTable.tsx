@@ -48,7 +48,7 @@ const AssetsTable = ({
   setSelectedItem,
   setSidePanelOpen
 }: {
-  data: DataType,
+  data: DataType[],
   sidePanelOpen: boolean,
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
   setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>

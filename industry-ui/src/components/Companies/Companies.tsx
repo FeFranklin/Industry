@@ -10,7 +10,7 @@ export interface DataType {
 const { Title } = Typography;
 
 const Companies = () => {
-  const [data, setData] = useState<DataType>()
+  const [data, setData] = useState<DataType[]>()
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
