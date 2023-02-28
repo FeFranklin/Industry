@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Typography, Progress, Descriptions } from 'antd';
+import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Statistic } from 'antd';
 import SlidingPanel from 'react-sliding-side-panel';
 import Highcharts from 'highcharts'
 import {
@@ -88,6 +88,48 @@ const AssetsSidePanel = ({
                 ))}
               </Descriptions>
             </div>
+          </div>
+          <div className='metrics-container'>
+            <Row gutter={8}>
+              <Col span={12}>
+                <Card bordered={false}>
+                  <Statistic
+                    title="Active"
+                    value={11.28}
+                    precision={2}
+                    valueStyle={{ color: '#3f8600' }}
+                    // prefix={<ArrowUpOutlined />}
+                    suffix="%"
+                  />
+                </Card>
+              </Col>
+              <Col span={12}>
+                <Card bordered={false}>
+                  <Statistic
+                    title="Idle"
+                    value={9.3}
+                    precision={2}
+                    valueStyle={{ color: '#cf1322' }}
+                    // prefix={<ArrowDownOutlined />}
+                    suffix="%"
+                  />
+                </Card>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Card bordered={false}>
+                    <Statistic
+                      title="Idle"
+                      value={9.3}
+                      precision={2}
+                      valueStyle={{ color: '#cf1322' }}
+                      // prefix={<ArrowDownOutlined />}
+                      suffix="%"
+                    />
+                  </Card>
+              </Col>
+            </Row>
           </div>
           {/* <HighchartsProvider Highcharts={Highcharts}>
             <HighchartsChart plotOptions={plotOptions}>
