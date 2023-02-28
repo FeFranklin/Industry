@@ -1,20 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import Highcharts from 'highcharts'
-import {
-  HighchartsProvider, HighchartsChart, Chart, XAxis, YAxis, Title, LineSeries, PlotLine
-} from 'react-jsx-highcharts';
-import { Button, Space } from 'antd';
-
+import { Login } from '@/components/Login/Login'
+import { Layout } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
 const inter = Inter({ subsets: ['latin'] })
-
-const plotOptions = {
-  series: {
-    pointStart: 2010
-  }
-};
 
 export default function Home() {
   return (
@@ -26,63 +16,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-        <HighchartsProvider Highcharts={Highcharts}>
-          <HighchartsChart plotOptions={plotOptions}>
-            <Chart />
-
-            <Title>Return on investment</Title>
-
-            <XAxis>
-              <XAxis.Title>Year</XAxis.Title>
-              
-              <PlotLine id="investment" value={2012} dashStyle="Dash" width={1} color="#666">
-                <PlotLine.Label>Series A</PlotLine.Label>
-              </PlotLine>
-            </XAxis>
-
-            <YAxis id="number">
-              <YAxis.Title>Returns (£)</YAxis.Title>
-              
-              <LineSeries id="my-series" data={[43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]} />
-            </YAxis>
-          </HighchartsChart>
-        </HighchartsProvider>
-        </div>
-
-        <div className={styles.grid}>
-        <Space wrap>
-          <Button type="primary">Primary Button</Button>
-          <Button>Default Button</Button>
-          <Button type="dashed">Dashed Button</Button>
-          <Button type="text">Text Button</Button>
-          <Button type="link">Link Button</Button>
-        </Space>
-        </div>
+        <Layout>
+          <Content>
+            <Login />
+          </Content>
+          <Sider width="60%"/>
+        </Layout>
       </main>
     </>
   )

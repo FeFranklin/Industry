@@ -105,3 +105,34 @@ a {
     color-scheme: dark;
   }
 }
+
+.panel-container {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  padding: 5rem 2rem;
+}
+
+.panel-button {
+  position: absolute;
+  margin: 2rem;
+  top: 0;
+  right: 0;
+}
+
+.specifications-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  gap: 3rem;
+}
+.specifications {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
