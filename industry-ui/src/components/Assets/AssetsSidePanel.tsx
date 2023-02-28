@@ -32,6 +32,14 @@ export interface Specifications {
   maxTemp: number;
 }
 
+enum HealthStatus {
+  inOperation = 1,
+  inDowntime,
+  inAlert,
+  unplannedStop,
+  plannedStop
+}
+
 const { Title: TextTitle, Text } = Typography;
 
 const AssetsSidePanel = ({
@@ -94,6 +102,17 @@ const AssetsSidePanel = ({
             {metrics?.length > 0 && (
             <>
               <Space direction="vertical" size="small" style={{ display: 'flex' }}>
+              <Row gutter={8}>
+                  <Col span={24}>
+                    <Card title="Health History Legend" bordered={false}>
+                    <Text italic>{HealthStatus.inOperation}: In Operation<br/></Text>
+                    <Text italic>{HealthStatus.inDowntime}: in Downtime<br/></Text>
+                    <Text italic>{HealthStatus.inAlert}: In Alert<br/></Text>
+                    <Text italic>{HealthStatus.unplannedStop}: Unplanned Stop<br/></Text>
+                    <Text italic>{HealthStatus.plannedStop}: Planned Stop<br/></Text>
+                    </Card>
+                  </Col>
+                </Row>
                 <Row gutter={8}>
                   <Col span={24}>
                     <Card bordered={false}>

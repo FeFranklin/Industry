@@ -19,7 +19,7 @@ export interface HealthHistoryEntity {
   timestamp: string;
 }
 
-enum Direction {
+enum HealthStatus {
   inOperation = 1,
   inDowntime,
   inAlert,
@@ -27,7 +27,7 @@ enum Direction {
   plannedStop
 }
 
-const flattenedData = (data: any) => data.map((point: any) => [moment.utc(point.timestamp).valueOf(), Direction[point.status]])
+const flattenedData = (data: any) => data.map((point: any) => [moment.utc(point.timestamp).valueOf(), HealthStatus[point.status]])
 
 export const AssetsHealthHistoryChart = ({data}:{data: (HealthHistoryEntity)[] | null | undefined}) => {
   console.log((data))
