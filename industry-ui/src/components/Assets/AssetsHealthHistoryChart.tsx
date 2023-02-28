@@ -15,7 +15,7 @@ const plotOptions = {
   }
 };
 
-const flattenedData = (data: any) => data.map((point: any) => [moment.utc(point.timestamp).valueOf(), HealthStatus[point.status]])
+const flattenedData = (data: (HealthHistoryEntity)[] | null | undefined) => data?.map((point: HealthHistoryEntity) => [moment.utc(point.timestamp).valueOf(), HealthStatus[point.status as keyof typeof HealthStatus]])
 
 export const AssetsHealthHistoryChart = ({data}:{data: (HealthHistoryEntity)[] | null | undefined}) => {
   return (
