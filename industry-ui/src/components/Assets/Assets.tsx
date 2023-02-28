@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import AssetsTable from './AssetsTable'
 import AssetsSidePanel from './AssetsSidePanel'
+import TableSkeleton from '../Loading/TableSkeleton'
 
 const Assets = () => {
   const [data, setData] = useState<any>(null)
@@ -18,7 +19,7 @@ const Assets = () => {
       })
   }, [])
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading) return <TableSkeleton />
   if (!data) return <p>No profile data</p>
 
   return (

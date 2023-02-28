@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Statistic, Space } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Statistic, Space, Skeleton } from 'antd';
 import SlidingPanel from 'react-sliding-side-panel';
 import moment from 'moment';
 import { AssetsHealthHistoryChart } from './AssetsHealthHistoryChart';

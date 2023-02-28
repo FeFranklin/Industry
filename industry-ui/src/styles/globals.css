@@ -115,7 +115,7 @@ a {
   flex-direction: column;
   position: relative;
   padding: 5rem 4rem;
-  gap: 2rem;
+  gap: 1rem;
   overflow-x: hidden;
 }
 

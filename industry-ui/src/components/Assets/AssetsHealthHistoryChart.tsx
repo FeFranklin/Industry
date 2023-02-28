@@ -30,7 +30,6 @@ enum HealthStatus {
 const flattenedData = (data: any) => data.map((point: any) => [moment.utc(point.timestamp).valueOf(), HealthStatus[point.status]])
 
 export const AssetsHealthHistoryChart = ({data}:{data: (HealthHistoryEntity)[] | null | undefined}) => {
-  console.log((data))
   return (
     <HighchartsProvider Highcharts={Highcharts}>
       <HighchartsChart plotOptions={plotOptions}>
