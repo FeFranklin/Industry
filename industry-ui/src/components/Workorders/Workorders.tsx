@@ -2,21 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Typography, Tag, Badge } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import TableSkeleton from '../Loading/TableSkeleton'
-
-export interface DataType {
-  assetId: number;
-  assignedUserIds?: (number)[] | null;
-  checklist?: (ChecklistEntity)[] | null;
-  description: string;
-  id: number;
-  priority: string;
-  status: string;
-  title: string;
-}
-export interface ChecklistEntity {
-  completed: boolean;
-  task: string;
-}
+import { WorkorderDataType } from '@/types/types';
 
 const { Title } = Typography;
 enum Status {
@@ -35,7 +21,7 @@ enum Priority {
 const getPriority = (priority: string) => Priority[priority as keyof typeof Priority ?? 'default']
 
 const Workorders = () => {
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<WorkorderDataType[]>()
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -49,7 +35,7 @@ const Workorders = () => {
   }, [])
 
   if (isLoading) return <TableSkeleton />
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<WorkorderDataType> = [
     {
       title: 'title',
       key: 'title',

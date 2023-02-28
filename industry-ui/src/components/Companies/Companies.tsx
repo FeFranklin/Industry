@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Table, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import TableSkeleton from '../Loading/TableSkeleton'
+import { CompaniesDataType } from '@/types/types';
 
-export interface DataType {
-  name: string;
-  id: number;
-}
 const { Title } = Typography;
 
 const Companies = () => {
-  const [data, setData] = useState<DataType[]>()
+  const [data, setData] = useState<CompaniesDataType[]>()
   const [isLoading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -24,7 +21,7 @@ const Companies = () => {
   }, [])
 
   if (isLoading) return <TableSkeleton />
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<CompaniesDataType> = [
     {
       title: 'id',
       key: 'id',

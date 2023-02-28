@@ -1,34 +1,7 @@
 import React, { useState } from 'react';
 import { Space, Table, Tag, Button, Badge, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-
-export interface DataType {
-  assignedUserIds?: (number)[] | null;
-  companyId: number;
-  healthHistory?: (HealthHistoryEntity)[] | null;
-  healthscore: number;
-  id: number;
-  image: string;
-  metrics: Metrics;
-  model: string;
-  name: string;
-  sensors?: (string)[] | null;
-  specifications: Specifications;
-  status: string;
-  unitId: number;
-}
-export interface HealthHistoryEntity {
-  status: string;
-  timestamp: string;
-}
-export interface Metrics {
-  lastUptimeAt: string;
-  totalCollectsUptime: number;
-  totalUptime: number;
-}
-export interface Specifications {
-  maxTemp: number;
-}
+import { AssetsDataType } from '@/types/types';
 
 enum Status {
   inOperation = "processing",
@@ -48,13 +21,13 @@ const AssetsTable = ({
   setSelectedItem,
   setSidePanelOpen
 }: {
-  data: DataType[],
+  data: AssetsDataType[],
   sidePanelOpen: boolean,
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
   setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>
 }) => {
 
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<AssetsDataType> = [
     {
       title: 'assignedUserIds',
       dataIndex: 'assignedUserIds',

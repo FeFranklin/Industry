@@ -3,42 +3,7 @@ import { Button, Image, Typography, Progress, Descriptions, Card, Col, Row, Stat
 import SlidingPanel from 'react-sliding-side-panel';
 import moment from 'moment';
 import { AssetsHealthHistoryChart } from './AssetsHealthHistoryChart';
-
-export interface DataType {
-  assignedUserIds?: (number)[] | null;
-  companyId: number;
-  healthHistory?: (HealthHistoryEntity)[] | null;
-  healthscore: number;
-  id: number;
-  image: string;
-  metrics: Metrics;
-  model: string;
-  name: string;
-  sensors?: (string)[] | null;
-  specifications: Specifications;
-  status: string;
-  unitId: number;
-}
-export interface HealthHistoryEntity {
-  status: string;
-  timestamp: string;
-}
-export interface Metrics {
-  lastUptimeAt: string;
-  totalCollectsUptime: number;
-  totalUptime: number;
-}
-export interface Specifications {
-  maxTemp: number;
-}
-
-enum HealthStatus {
-  inOperation = 1,
-  inDowntime,
-  inAlert,
-  unplannedStop,
-  plannedStop
-}
+import { AssetsDataType, HealthStatus } from '@/types/types';
 
 const { Title: TextTitle, Text } = Typography;
 
@@ -49,7 +14,7 @@ const AssetsSidePanel = ({
 }:{
   openPanel: boolean,
   setOpenPanel: React.Dispatch<React.SetStateAction<boolean>>,
-  selectedItem: DataType
+  selectedItem: AssetsDataType
 }) => {
   const specifications = []
   const metrics = []

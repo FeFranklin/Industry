@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import AssetsTable from './AssetsTable'
 import AssetsSidePanel from './AssetsSidePanel'
 import TableSkeleton from '../Loading/TableSkeleton'
+import { AssetsDataType } from '@/types/types';
 
 const Assets = () => {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<AssetsDataType[] | null>(null)
   const [isLoading, setLoading] = useState(false)
   const [sidePanelOpen, setSidePanelOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState(-1)

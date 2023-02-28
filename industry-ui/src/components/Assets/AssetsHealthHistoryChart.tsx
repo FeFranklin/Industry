@@ -4,6 +4,7 @@ import {
 } from 'react-jsx-highcharts';
 import React from 'react';
 import moment from 'moment';
+import { HealthHistoryEntity, HealthStatus } from '@/types/types';
 
 const plotOptions = {
   series: {
@@ -13,19 +14,6 @@ const plotOptions = {
     }
   }
 };
-
-export interface HealthHistoryEntity {
-  status: string;
-  timestamp: string;
-}
-
-enum HealthStatus {
-  inOperation = 1,
-  inDowntime,
-  inAlert,
-  unplannedStop,
-  plannedStop
-}
 
 const flattenedData = (data: any) => data.map((point: any) => [moment.utc(point.timestamp).valueOf(), HealthStatus[point.status]])
 
