@@ -77,6 +77,7 @@ const AssetsSidePanel = ({
             src={selectedItem?.image}
             alt="Image of the selected motor"
             preview={false}
+            placeholder={true}
           />
           <div className='specifications-container'>
             <div className='health-score'>
