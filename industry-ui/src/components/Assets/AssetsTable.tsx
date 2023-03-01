@@ -3,7 +3,7 @@ import { Space, Table, Tag, Button, Badge, Typography, Col, Row, Tooltip, Modal,
 import type { ColumnsType } from 'antd/es/table';
 import { AssetsDataType } from '@/types/types';
 import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
-import AssetsAddAssetForm from './AssetsAddAssetForm';
+import AssetsAddAssetForm from './AssetsAddAssetForm/AssetsAddAssetForm';
 
 enum Status {
   inOperation = "processing",
