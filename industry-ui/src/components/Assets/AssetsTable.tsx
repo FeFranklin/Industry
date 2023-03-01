@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Button, Badge, Typography, Tooltip, Modal, notification } from 'antd';
+import { Space, Table, Tag, Button, Badge, Typography, Col, Row, Tooltip, Modal, notification, Divider } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { AssetsDataType } from '@/types/types';
-import { QuestionCircleOutlined, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled } from '@ant-design/icons';
+import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
 
 enum Status {
   inOperation = "processing",
@@ -16,7 +16,7 @@ const getStatus = (status: string) => {
 
 const randomFailRequestMock = () => Math.random() > 0.5
 
-const { Title, Link } = Typography;
+const { Title, Text, Link } = Typography;
 
 const AssetsTable = ({
   data,
@@ -34,6 +34,26 @@ const AssetsTable = ({
   const [api, contextHolder] = notification.useNotification();
 
   const columns: ColumnsType<AssetsDataType> = [
+    {
+      title: 'edit',
+      key: 'edit',
+      dataIndex: '',
+      render: (_, record) => (
+        <Tooltip title="Click here to edit this asset!">
+          <Link onClick={() => console.log(record)}><EditFilled /></Link>
+        </Tooltip>
+      ),
+    },
+    {
+      title: 'name',
+      key: 'name',
+      dataIndex: 'name',
+      render: (_, record) => (
+        <Tooltip title="Click here to edit this asset!">
+          <Text onClick={() => console.log('hehehe')}>{record.name}</Text >
+        </Tooltip>
+      ),
+    },
     {
       title: 'assignedUserIds',
       dataIndex: 'assignedUserIds',
@@ -60,16 +80,6 @@ const AssetsTable = ({
       key: 'model',
     },
     {
-      title: 'name',
-      key: 'name',
-      dataIndex: 'name',
-      render: (_, record) => (
-        <Tooltip title="Click here to edit this asset!">
-          <Link onClick={() => console.log('hehehe')}>{record.name} <QuestionCircleOutlined /></Link >
-        </Tooltip>
-      ),
-    },
-    {
       title: 'sensors',
       key: 'sensors',
       dataIndex: 'sensors'
@@ -86,16 +96,17 @@ const AssetsTable = ({
       title: 'Action',
       key: 'action',
       render: (_, record, index) => (
-        <Space size="middle">
-          <Button
-            onClick={() => {
-              setSelectedItem(index)
-              setSidePanelOpen(true)
-            }}
-            disabled={sidePanelOpen}
-            type="primary"
-          > Open {record.name}</Button>
-          <Tooltip title="delete asset!">
+        <Space size='small' style={{width: '100%', justifyContent: 'space-between'}} split={<Divider type="vertical" />}>
+          <Tooltip title="More information.">
+            <Button
+              onClick={() => {
+                setSelectedItem(index)
+                setSidePanelOpen(true)
+              }}
+              disabled={sidePanelOpen}
+            > Open {record.name}</Button>
+          </Tooltip>
+          <Tooltip title="Delete asset.">
             <Button
               type="primary"
               danger
@@ -145,7 +156,6 @@ const AssetsTable = ({
       footer={[
         <Button
           key="cancel"
-          type="primary"
           onClick={() => setOpenDeleteModal(null)}
         >
           Cancel
@@ -157,8 +167,13 @@ const AssetsTable = ({
     >
       <p>Please confirm below.</p>
     </Modal>
-    <Title level={2}>Assets</Title>
-    <Table columns={columns} dataSource={data} />
+    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+      <Title level={2}>Assets</Title>
+      <Tooltip title="Add new asset.">
+        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}}>Add new Asset</Button>
+      </Tooltip>
+      <Table columns={columns} dataSource={data} />
+    </Space>
   </>
   )
 }
