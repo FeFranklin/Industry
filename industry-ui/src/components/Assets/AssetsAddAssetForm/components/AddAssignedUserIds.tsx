@@ -2,24 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Select, Space } from 'antd';
 import type { SelectProps } from 'antd';
 import { UsersDataType } from '@/types/types';
-const options: SelectProps['options'] = [];
-
-for (let i = 10; i < 36; i++) {
-  options.push({
-    label: i.toString(36) + i,
-    value: i.toString(36) + i,
-  });
-}
-
-const handleChange = (value: string[]) => {
-  console.log(`selected ${value}`);
-};
 
 const flattenUserIdsData = (data: UsersDataType[] | undefined) => data?.map((user: UsersDataType) => ({label: user.name, value: user.id}))
 
-const AddAssignedUserIds = () => {
+const AddAssignedUserIds = ({setFormUserIdsValue}: {setFormUserIdsValue: (userIds: number[]) => void}) => {
   const [data, setData] = useState<UsersDataType[]>()
-  const [isLoading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -30,16 +18,20 @@ const AddAssignedUserIds = () => {
         setLoading(false)
       })
   }, [])
+
+  const handleChange = (value:any) => setFormUserIdsValue(value)
   
   return (
   <Space style={{ width: '100%' }} direction="vertical">
     <Select
       mode="multiple"
       allowClear
+      loading={loading}
       style={{ width: '100%' }}
       placeholder="Please select"
       defaultValue={[]}
       onChange={handleChange}
+      onDeselect={handleChange}
       options={flattenUserIdsData(data)}
     />
   </Space>

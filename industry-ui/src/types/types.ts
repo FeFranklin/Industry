@@ -22,9 +22,11 @@ export interface UsersDataType {
 }
 
 export interface UnitDataType {
-  name: string;
   companyId: number;
+  id: number;
+  name: string;
 }
+
 
 export interface CompaniesDataType {
   name: string;

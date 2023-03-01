@@ -8,7 +8,7 @@ const { Title } = Typography;
 
 const Units = () => {
   const [data, setData] = useState<UnitDataType[]>()
-  const [isLoading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -20,7 +20,7 @@ const Units = () => {
       })
   }, [])
 
-  if (isLoading) return <TableSkeleton />
+  if (loading) return <TableSkeleton />
 
   const columns: ColumnsType<UnitDataType> = [
     {

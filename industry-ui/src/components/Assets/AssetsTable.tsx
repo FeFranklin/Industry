@@ -137,9 +137,23 @@ const AssetsTable = ({
     });
   }
 
+  const openAddNotification = (res: any) => {
+    let notificationDescription =  'Asset has been added!'
+    let notificationIcon = <InfoCircleFilled style={{ color: '#389e0d' }} />
+    if (res.status > 299 || randomFailRequestMock()) {
+      notificationDescription = 'Operation failed :( please try again later.'
+      notificationIcon = <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+    }
+    api.open({
+      message: 'Add Operation',
+      description: notificationDescription,
+      icon: notificationIcon,
+    });
+  }
+
   const showConfirm = (record: AssetsDataType) => {
     confirm({
-      title: 'Are you sure you would like to delete this asset?',
+      title: 'Delete this asset?',
       icon: <ExclamationCircleFilled />,
       content: `Please confirm deletion of ${record.name}.`,
       onOk() {
@@ -154,11 +168,11 @@ const AssetsTable = ({
   const handleDelete = (record: AssetsDataType) => {
     setLoading(true)
     fetch(`https://my-json-server.typicode.com/tractian/fake-api/assets/${record?.id}`, { method: 'DELETE' })
-      .then((res) => {
-        openDeleteNotification(res)
-      })
-      .catch((err) => openDeleteNotification(err))
-      .finally(() => setLoading(false))
+    .then((res) => {
+      openDeleteNotification(res)
+    })
+    .catch((err) => openDeleteNotification(err))
+    .finally(() => setLoading(false))
   }
 
   return (
@@ -171,7 +185,7 @@ const AssetsTable = ({
       footer={[]}
       onCancel={() => setOpenAddModal(false)}
     >
-      <AssetsAddAssetForm />
+      <AssetsAddAssetForm openAddNotification={openAddNotification} onCancel={() => setOpenAddModal(false)} />
     </Modal>
     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
       <Title level={2}>Assets</Title>

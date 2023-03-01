@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Radio } from 'antd';
+import { Button, Form, Input } from 'antd';
 import AddImage from './components/AddImage';
 import AddSensors from './components/AddSensors';
 import AddAssignedUserIds from './components/AddAssignedUserIds';
-type LayoutType = Parameters<typeof Form>[0]['layout'];
+import AddAssinedUnitId from './components/AddAssignedUnitId';
+import AddAssignedCompanyId from './components/AddAssignedCompanyId';
 
-const AssetsAddAssetForm = () => {
+const AssetsAddAssetForm = ({ onCancel, openAddNotification }: { onCancel: () => void, openAddNotification: (res: any) => void }) => {
   const [form] = Form.useForm();
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-  };
+  const [loading, setLoading] = useState(false)
+
+  const handleOnFinish = (values: any) => {
+    setLoading(true)
+    fetch('https://my-json-server.typicode.com/tractian/fake-api/assets/', { method: 'POST', body: JSON.stringify(values) })
+    .then((res) => {
+      openAddNotification(res)
+      onCancel()
+    })
+    .catch((err) => openAddNotification(err))
+    .finally(() => setLoading(false))
+    
+  }
 
   return (
     <Form
@@ -17,7 +28,7 @@ const AssetsAddAssetForm = () => {
       form={form}
       initialValues={{ layout: 'vertical' }}
       onValuesChange={() => {}}
-      onFinish={onFinish}
+      onFinish={handleOnFinish}
       style={{ maxWidth: 600 }}
     >
       <Form.Item label="Image of Asset" name="image">
@@ -33,9 +44,16 @@ const AssetsAddAssetForm = () => {
         <AddSensors setFormSensorsValue={(sensors: string[]) => form.setFieldValue('sensors', sensors)}/>
       </Form.Item>
       <Form.Item label="Assigned Users" name="assignedusersids">
-        <AddAssignedUserIds />
+        <AddAssignedUserIds setFormUserIdsValue={(unitId: number[]) => form.setFieldValue('assignedusersids', unitId)} />
+      </Form.Item>
+      <Form.Item label="Assigned Unit" name="assignedunitid">
+        <AddAssinedUnitId setFormUnitIdValue={(unitId: number) => form.setFieldValue('assignedunitid', unitId)}/>
+      </Form.Item>
+      <Form.Item label="Assigned Company" name="assignedcompanyid">
+        <AddAssignedCompanyId setFormCompanyIdValue={(companyId: number) => form.setFieldValue('assignedcompanyid', companyId)} />
       </Form.Item>
       <Form.Item>
+        <Button onClick={onCancel}>Cancel</Button>
         <Button style={{float: 'right'}} type="primary" htmlType="submit">Add Asset!</Button>
       </Form.Item>
     </Form>
