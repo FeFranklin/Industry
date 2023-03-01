@@ -56,7 +56,7 @@ const AssetsSidePanel = ({
               <Text type="secondary" style={{textAlign: 'center'}}>health score</Text>
             </div>
             <div className='specifications'>
-              <Descriptions title="Specificaitons">
+              <Descriptions title="Specifications">
                 {selectedItem?.specifications && specifications?.map((spec) => (
                   <Descriptions.Item key={spec.label} label={spec.label}>{spec.value ?? 'no data'}</Descriptions.Item>
                 ))}

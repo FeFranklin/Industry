@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Space, Table, Tag, Button, Badge, Typography } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Space, Table, Tag, Button, Badge, Typography, Tooltip, Modal, notification } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { AssetsDataType } from '@/types/types';
+import { QuestionCircleOutlined, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled } from '@ant-design/icons';
 
 enum Status {
   inOperation = "processing",
@@ -13,7 +14,9 @@ const getStatus = (status: string) => {
   return Status[status as keyof typeof Status]
 }
 
-const { Title } = Typography;
+const randomFailRequestMock = () => Math.random() > 0.5
+
+const { Title, Link } = Typography;
 
 const AssetsTable = ({
   data,
@@ -26,6 +29,9 @@ const AssetsTable = ({
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
   setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState<AssetsDataType | null>()
+  const [loading, setLoading] = useState(false)
+  const [api, contextHolder] = notification.useNotification();
 
   const columns: ColumnsType<AssetsDataType> = [
     {
@@ -56,7 +62,12 @@ const AssetsTable = ({
     {
       title: 'name',
       key: 'name',
-      dataIndex: 'name'
+      dataIndex: 'name',
+      render: (_, record) => (
+        <Tooltip title="Click here to edit this asset!">
+          <Link onClick={() => console.log('hehehe')}>{record.name} <QuestionCircleOutlined /></Link >
+        </Tooltip>
+      ),
     },
     {
       title: 'sensors',
@@ -67,7 +78,7 @@ const AssetsTable = ({
       title: 'status',
       key: 'status',
       dataIndex: 'status',
-      render: (_, record, index) => (
+      render: (_, record) => (
         <Badge status={getStatus(record?.status)} text={record?.status} />
       ),
     },
@@ -84,13 +95,68 @@ const AssetsTable = ({
             disabled={sidePanelOpen}
             type="primary"
           > Open {record.name}</Button>
+          <Tooltip title="delete asset!">
+            <Button
+              type="primary"
+              danger
+              shape="circle"
+              icon={<DeleteOutlined />}
+              onClick={() => setOpenDeleteModal(record)}
+            />
+          </Tooltip>
         </Space>
       ),
     },
   ]
 
+  const openDeleteNotification = (res: any) => {
+    let notificationDescription =  'Asset has been deleted.'
+    let notificationIcon = <InfoCircleFilled style={{ color: '#389e0d' }} />
+    if (res.status > 299 || randomFailRequestMock()) {
+      notificationDescription = 'Operation failed :( please try again later.'
+      notificationIcon = <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+    }
+    api.open({
+      message: 'Deletion Operation',
+      description: notificationDescription,
+      icon: notificationIcon,
+    });
+  }
+
+  const handleDelete = () => {
+    setLoading(true)
+    fetch(`https://my-json-server.typicode.com/tractian/fake-api/assets/${openDeleteModal?.id}`, { method: 'DELETE' })
+      .then((res) => {
+        openDeleteNotification(res)
+      })
+      .catch((err) => openDeleteNotification(err))
+      .finally(() => setLoading(false))
+
+    setOpenDeleteModal(null)
+  }
+
   return (
   <>
+    {contextHolder}
+    <Modal
+      title="Are you sure you would like to delete this asset?"
+      centered
+      open={!!openDeleteModal}
+      footer={[
+        <Button
+          key="cancel"
+          type="primary"
+          onClick={() => setOpenDeleteModal(null)}
+        >
+          Cancel
+        </Button>,
+        <Button type="primary" key="delete" danger onClick={handleDelete} loading={loading}>
+          Delete
+        </Button>,
+      ]}
+    >
+      <p>Please confirm below.</p>
+    </Modal>
     <Title level={2}>Assets</Title>
     <Table columns={columns} dataSource={data} />
   </>
