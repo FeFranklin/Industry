@@ -21,7 +21,7 @@ const AssetsAddAssetForm = () => {
       style={{ maxWidth: 600 }}
     >
       <Form.Item label="Image of Asset" name="image">
-        <AddImage setImageValue={(image: any) => form.setFieldValue('image', image)}/>
+        <AddImage setFormImageValue={(image: any) => form.setFieldValue('image', image)}/>
       </Form.Item>
       <Form.Item label="Model" name="model">
         <Input placeholder="motor, fan, dryer..." />
