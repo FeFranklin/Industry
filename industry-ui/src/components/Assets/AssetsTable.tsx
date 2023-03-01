@@ -3,12 +3,15 @@ import { Space, Table, Tag, Button, Badge, Typography, Col, Row, Tooltip, Modal,
 import type { ColumnsType } from 'antd/es/table';
 import { AssetsDataType } from '@/types/types';
 import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
+import AssetsAddAssetForm from './AssetsAddAssetForm';
 
 enum Status {
   inOperation = "processing",
   inAlert = "error",
   inDowntime = "warning"
 }
+
+const { confirm } = Modal;
 
 const getStatus = (status: string) => {
   return Status[status as keyof typeof Status]
@@ -29,7 +32,7 @@ const AssetsTable = ({
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
   setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const [openDeleteModal, setOpenDeleteModal] = useState<AssetsDataType | null>()
+  const [openAddModal, setOpenAddModal] = useState<boolean>(false)
   const [loading, setLoading] = useState(false)
   const [api, contextHolder] = notification.useNotification();
 
@@ -112,7 +115,7 @@ const AssetsTable = ({
               danger
               shape="circle"
               icon={<DeleteOutlined />}
-              onClick={() => setOpenDeleteModal(record)}
+              onClick={() => showConfirm(record)}
             />
           </Tooltip>
         </Space>
@@ -134,43 +137,46 @@ const AssetsTable = ({
     });
   }
 
-  const handleDelete = () => {
+  const showConfirm = (record: AssetsDataType) => {
+    confirm({
+      title: 'Are you sure you would like to delete this asset?',
+      icon: <ExclamationCircleFilled />,
+      content: `Please confirm deletion of ${record.name}.`,
+      onOk() {
+        handleDelete(record);
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  const handleDelete = (record: AssetsDataType) => {
     setLoading(true)
-    fetch(`https://my-json-server.typicode.com/tractian/fake-api/assets/${openDeleteModal?.id}`, { method: 'DELETE' })
+    fetch(`https://my-json-server.typicode.com/tractian/fake-api/assets/${record?.id}`, { method: 'DELETE' })
       .then((res) => {
         openDeleteNotification(res)
       })
       .catch((err) => openDeleteNotification(err))
       .finally(() => setLoading(false))
-
-    setOpenDeleteModal(null)
   }
 
   return (
   <>
     {contextHolder}
     <Modal
-      title="Are you sure you would like to delete this asset?"
+      title="Adding new asset to the inventory!"
       centered
-      open={!!openDeleteModal}
-      footer={[
-        <Button
-          key="cancel"
-          onClick={() => setOpenDeleteModal(null)}
-        >
-          Cancel
-        </Button>,
-        <Button type="primary" key="delete" danger onClick={handleDelete} loading={loading}>
-          Delete
-        </Button>,
-      ]}
+      open={!!openAddModal}
+      footer={[]}
+      onCancel={() => setOpenAddModal(false)}
     >
-      <p>Please confirm below.</p>
+      <AssetsAddAssetForm />
     </Modal>
     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
       <Title level={2}>Assets</Title>
       <Tooltip title="Add new asset.">
-        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}}>Add new Asset</Button>
+        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}} onClick={() => setOpenAddModal(true)}>Add new Asset</Button>
       </Tooltip>
       <Table columns={columns} dataSource={data} />
     </Space>
