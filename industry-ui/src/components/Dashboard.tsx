@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
-import styles from '@/styles/Home.module.css'
+// import styles from '@/styles/Home.module.css'
 import Assets from '@/components/Assets/Assets';
 import Companies from '@/components/Companies/Companies';
 import Units from '@/components/Units/Units';
 import Users from '@/components/Users/Users';
 import Workorders from '@/components/Workorders/Workorders';
+import styles from '@/styles/Dashboard.module.scss'
 
 const { Header, Content, Footer } = Layout;
 const items = ['Assets', 'Companies', 'Units', 'Users', 'Workorders']
@@ -30,9 +31,9 @@ const Dashboard = () => {
           <div className="logo" />
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[selectedPage]} items={items1} onClick={({ key }) => onChangeView(key)}/>
         </Header>
-        <Content style={{ padding: '0 50px' }}>
-          <Layout style={{ padding: '24px 0', background: colorBgContainer, margin: '3.125rem 0 0 0' }}>
-            <Content style={{ padding: '0 24px', minHeight: 280 }}>
+        <Content className={styles.contentContainer}>
+          <Layout className={styles.layout} style={{ background: colorBgContainer}}>
+            <Content className={styles.innerContent}>
             {selectedPage === 'Assets' && <Assets />}
             {selectedPage === 'Companies' && <Companies />}
             {selectedPage === 'Units' && <Units />}
@@ -41,7 +42,7 @@ const Dashboard = () => {
             </Content>
           </Layout>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>©2023 Created by Felipe Franklin</Footer>
+        <Footer className={styles.footer}>©2023 Created by Felipe Franklin</Footer>
       </Layout>
     </main>
   );

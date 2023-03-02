@@ -1,0 +1,23 @@
+.main {
+  display: flex;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.contentContainer {
+  padding: 0 50px;
+}
+
+.layout {
+  padding: 24px 0;
+  margin: 3.125rem 0 0 0;
+}
+
+.innerContent {
+  padding: 0 24px;
+  min-height: 280px;
+}
+
+.footer {
+  text-align: center;
+}
