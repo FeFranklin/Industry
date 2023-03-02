@@ -1,10 +1,20 @@
-import React, {useState, useEffect } from 'react';
-import { Select } from 'antd';
-import { UnitDataType } from '@/types/types';
+import React, { useState, useEffect } from 'react'
+import { Select } from 'antd'
+import { UnitDataType } from '@/types/types'
 
-const flattenUserIdsData = (data: UnitDataType[] | undefined) => data?.map((unit: UnitDataType) => ({label: unit.name, value: unit.id.toString()}))
+const flattenUserIdsData = (data: UnitDataType[] | undefined) =>
+  data?.map((unit: UnitDataType) => ({
+    label: unit.name,
+    value: unit.id.toString(),
+  }))
 
-const AddAssinedUnitId = ({setFormUnitIdValue, defaultValue}: {setFormUnitIdValue: (companyId: number) => void, defaultValue: number | undefined | null}) => {
+const AddAssinedUnitId = ({
+  setFormUnitIdValue,
+  defaultValue,
+}: {
+  setFormUnitIdValue: (companyId: number) => void
+  defaultValue: number | undefined | null
+}) => {
   const [data, setData] = useState<UnitDataType[]>()
   const [loading, setLoading] = useState(false)
 
@@ -19,7 +29,7 @@ const AddAssinedUnitId = ({setFormUnitIdValue, defaultValue}: {setFormUnitIdValu
   }, [])
 
   const handleChange = (value: string) => setFormUnitIdValue(parseInt(value))
-  
+
   return (
     <Select
       loading={loading}
@@ -28,6 +38,7 @@ const AddAssinedUnitId = ({setFormUnitIdValue, defaultValue}: {setFormUnitIdValu
       onChange={handleChange}
       options={flattenUserIdsData(data)}
     />
-)};
+  )
+}
 
-export default AddAssinedUnitId;
+export default AddAssinedUnitId

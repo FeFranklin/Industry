@@ -1,17 +1,16 @@
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React from 'react'
+import { Button, Checkbox, Form, Input } from 'antd'
 
 const onFinish = (values: any) => {
-  console.log('Success:', values);
+  console.log('Success:', values)
   window.location.href = '/dashboard'
-};
+}
 
 const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
+  console.log('Failed:', errorInfo)
+}
 
 const LoginForm = () => {
-  
   return (
     <Form
       name="basic"
@@ -40,7 +39,11 @@ const LoginForm = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item
+        name="remember"
+        valuePropName="checked"
+        wrapperCol={{ offset: 8, span: 16 }}
+      >
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
 
@@ -51,6 +54,6 @@ const LoginForm = () => {
       </Form.Item>
     </Form>
   )
-};
+}
 
-export default LoginForm;
+export default LoginForm

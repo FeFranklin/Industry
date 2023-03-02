@@ -1,36 +1,55 @@
-import React, { useState, useRef } from 'react';
-import { Space, Table, Tag, Button, Badge, Typography, Tooltip, Modal, notification, Divider } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
-import { AssetsDataType, AssetsStatus } from '@/types/types';
-import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
-import AssetForm from './AssetsAddAssetForm/AssetForm';
+import React, { useState, useRef } from 'react'
+import {
+  Space,
+  Table,
+  Tag,
+  Button,
+  Badge,
+  Typography,
+  Tooltip,
+  Modal,
+  notification,
+  Divider,
+} from 'antd'
+import type { ColumnsType } from 'antd/es/table'
+import { AssetsDataType, AssetsStatus } from '@/types/types'
+import {
+  EditFilled,
+  DeleteOutlined,
+  ExclamationCircleFilled,
+  InfoCircleFilled,
+  PlusCircleFilled,
+} from '@ant-design/icons'
+import AssetForm from './AssetsAddAssetForm/AssetForm'
 import styles from '@/styles/AssetsTable.module.scss'
-import { randomFailRequestMock } from '@/utils/utils';
+import { randomFailRequestMock } from '@/utils/utils'
 
-const { confirm } = Modal;
+const { confirm } = Modal
 
 const getStatus = (status: string) => {
   return AssetsStatus[status as keyof typeof AssetsStatus]
 }
 
-const { Title, Text, Link } = Typography;
+const { Title, Text, Link } = Typography
 
 const AssetsTable = ({
   data,
   sidePanelOpen,
   setSelectedItem,
-  setSidePanelOpen
+  setSidePanelOpen,
 }: {
-  data: AssetsDataType[],
-  sidePanelOpen: boolean,
-  setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
-  setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>
+  data: AssetsDataType[]
+  sidePanelOpen: boolean
+  setSelectedItem: React.Dispatch<React.SetStateAction<number>>
+  setSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
   const [openFormModal, setOpenFormModal] = useState<boolean>(false)
-  const [assetInEdition, setAssetInEdition] = useState<AssetsDataType | null>(null)
-  const formRef = useRef<{clearForm: () => void}>()
+  const [assetInEdition, setAssetInEdition] = useState<AssetsDataType | null>(
+    null
+  )
+  const formRef = useRef<{ clearForm: () => void }>()
   const [loading, setLoading] = useState(false)
-  const [api, contextHolder] = notification.useNotification();
+  const [api, contextHolder] = notification.useNotification()
 
   const columns: ColumnsType<AssetsDataType> = [
     {
@@ -39,10 +58,14 @@ const AssetsTable = ({
       dataIndex: '',
       render: (_, record) => (
         <Tooltip title="Click here to edit this asset!">
-          <Link onClick={() => {
-            setOpenFormModal(true)
-            setAssetInEdition(record)
-          }}><EditFilled /></Link>
+          <Link
+            onClick={() => {
+              setOpenFormModal(true)
+              setAssetInEdition(record)
+            }}
+          >
+            <EditFilled />
+          </Link>
         </Tooltip>
       ),
     },
@@ -52,7 +75,7 @@ const AssetsTable = ({
       dataIndex: 'name',
       render: (_, record) => (
         <Tooltip title="Click here to edit this asset!">
-          <Text onClick={() => console.log('hehehe')}>{record.name}</Text >
+          <Text onClick={() => console.log('hehehe')}>{record.name}</Text>
         </Tooltip>
       ),
     },
@@ -63,11 +86,10 @@ const AssetsTable = ({
       render: (_, { assignedUserIds }) => (
         <>
           {assignedUserIds?.map((userId) => (
-              <Tag color="green" key={userId}>
-                User {userId.toString().toUpperCase()}
-              </Tag>
-            )
-          )}
+            <Tag color="green" key={userId}>
+              User {userId.toString().toUpperCase()}
+            </Tag>
+          ))}
         </>
       ),
     },
@@ -84,7 +106,7 @@ const AssetsTable = ({
     {
       title: 'sensors',
       key: 'sensors',
-      dataIndex: 'sensors'
+      dataIndex: 'sensors',
     },
     {
       title: 'status',
@@ -98,7 +120,11 @@ const AssetsTable = ({
       title: 'Action',
       key: 'action',
       render: (_, record, index) => (
-        <Space size='small' style={{width: '100%', justifyContent: 'space-between'}} split={<Divider type="vertical" />}>
+        <Space
+          size="small"
+          style={{ width: '100%', justifyContent: 'space-between' }}
+          split={<Divider type="vertical" />}
+        >
           <Tooltip title="More information.">
             <Button
               onClick={() => {
@@ -106,7 +132,10 @@ const AssetsTable = ({
                 setSidePanelOpen(true)
               }}
               disabled={sidePanelOpen}
-            > Open {record.name}</Button>
+            >
+              {' '}
+              Open {record.name}
+            </Button>
           </Tooltip>
           <Tooltip title="Delete asset.">
             <Button
@@ -123,34 +152,38 @@ const AssetsTable = ({
   ]
 
   const openDeleteNotification = (res: any) => {
-    let notificationDescription =  'Asset has been deleted.'
+    let notificationDescription = 'Asset has been deleted.'
     let notificationIcon = <InfoCircleFilled style={{ color: '#389e0d' }} />
     if (res.status > 299 || randomFailRequestMock()) {
       notificationDescription = 'Operation failed :( please try again later.'
-      notificationIcon = <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+      notificationIcon = (
+        <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+      )
     }
     api.open({
       message: 'Deletion Operation',
       description: notificationDescription,
       icon: notificationIcon,
-    });
+    })
   }
 
   const openNotificaiton = (res: any, method: string) => {
-    let notificationDescription =  'Asset has been added!'
+    let notificationDescription = 'Asset has been added!'
     let notificationIcon = <InfoCircleFilled style={{ color: '#389e0d' }} />
     if (method === 'PUT') {
       notificationDescription = 'Asset has been updated!'
     }
     if (res.status > 299 || randomFailRequestMock()) {
       notificationDescription = 'Operation failed :( please try again later.'
-      notificationIcon = <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+      notificationIcon = (
+        <ExclamationCircleFilled style={{ color: '#FF0000' }} />
+      )
     }
     api.open({
       message: 'Operation',
       description: notificationDescription,
       icon: notificationIcon,
-    });
+    })
   }
 
   const showConfirm = (record: AssetsDataType) => {
@@ -159,22 +192,25 @@ const AssetsTable = ({
       icon: <ExclamationCircleFilled />,
       content: `Please confirm deletion of ${record.name}.`,
       onOk() {
-        handleDelete(record);
+        handleDelete(record)
       },
       onCancel() {
-        console.log('Cancel');
+        console.log('Cancel')
       },
-    });
-  };
+    })
+  }
 
   const handleDelete = (record: AssetsDataType) => {
     setLoading(true)
-    fetch(`https://my-json-server.typicode.com/tractian/fake-api/assets/${record?.id}`, { method: 'DELETE' })
-    .then((res) => {
-      openDeleteNotification(res)
-    })
-    .catch((err) => openDeleteNotification(err))
-    .finally(() => setLoading(false))
+    fetch(
+      `https://my-json-server.typicode.com/tractian/fake-api/assets/${record?.id}`,
+      { method: 'DELETE' }
+    )
+      .then((res) => {
+        openDeleteNotification(res)
+      })
+      .catch((err) => openDeleteNotification(err))
+      .finally(() => setLoading(false))
   }
 
   const handleCloseModal = () => {
@@ -184,26 +220,46 @@ const AssetsTable = ({
   }
 
   return (
-  <>
-    {contextHolder}
-    <Modal
-      title={assetInEdition ? `Editing ${assetInEdition?.name}` : "Adding new asset to the inventory!"}
-      centered
-      open={!!openFormModal}
-      footer={[]}
-      onCancel={handleCloseModal}
-    >
-      <AssetForm ref={formRef} defaultValues={assetInEdition} openNotificaiton={openNotificaiton} onCancel={handleCloseModal} />
-    </Modal>
-    <Space direction="vertical" size="middle" className={styles.assetsTableSpace}>
-      <Title level={2}>Assets</Title>
-      <Tooltip title="Add new asset.">
-        <Button type="primary" icon={<PlusCircleFilled />} className={styles.addItemButton} onClick={() => setOpenFormModal(true)}>Add new Asset</Button>
-      </Tooltip>
-      <Table columns={columns} dataSource={data} />
-    </Space>
-  </>
+    <>
+      {contextHolder}
+      <Modal
+        title={
+          assetInEdition
+            ? `Editing ${assetInEdition?.name}`
+            : 'Adding new asset to the inventory!'
+        }
+        centered
+        open={!!openFormModal}
+        footer={[]}
+        onCancel={handleCloseModal}
+      >
+        <AssetForm
+          ref={formRef}
+          defaultValues={assetInEdition}
+          openNotificaiton={openNotificaiton}
+          onCancel={handleCloseModal}
+        />
+      </Modal>
+      <Space
+        direction="vertical"
+        size="middle"
+        className={styles.assetsTableSpace}
+      >
+        <Title level={2}>Assets</Title>
+        <Tooltip title="Add new asset.">
+          <Button
+            type="primary"
+            icon={<PlusCircleFilled />}
+            className={styles.addItemButton}
+            onClick={() => setOpenFormModal(true)}
+          >
+            Add new Asset
+          </Button>
+        </Tooltip>
+        <Table columns={columns} dataSource={data} />
+      </Space>
+    </>
   )
 }
 
-export default AssetsTable;
+export default AssetsTable

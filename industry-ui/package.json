@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pretty": "prettier --check --ignore-path .gitignore .",
+    "pretty:fix": "prettier --write --ignore-path .gitignore ."
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
@@ -28,7 +30,9 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "eslint-config-prettier": "^8.6.0",
     "jest": "^29.4.3",
+    "prettier": "^2.8.4",
     "sass": "^1.58.3"
   }
 }

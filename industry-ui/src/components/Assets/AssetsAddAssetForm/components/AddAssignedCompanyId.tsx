@@ -1,10 +1,20 @@
-import React, {useState, useEffect } from 'react';
-import { Select } from 'antd';
-import { CompaniesDataType } from '@/types/types';
+import React, { useState, useEffect } from 'react'
+import { Select } from 'antd'
+import { CompaniesDataType } from '@/types/types'
 
-const flattenUserIdsData = (data: CompaniesDataType[] | undefined) => data?.map((unit: CompaniesDataType) => ({label: unit.name, value: unit.id.toString()}))
+const flattenUserIdsData = (data: CompaniesDataType[] | undefined) =>
+  data?.map((unit: CompaniesDataType) => ({
+    label: unit.name,
+    value: unit.id.toString(),
+  }))
 
-const AddAssignedCompanyId = ({setFormCompanyIdValue, defaultValue}: {setFormCompanyIdValue: (companyId: number) => void, defaultValue: number | undefined | null}) => {
+const AddAssignedCompanyId = ({
+  setFormCompanyIdValue,
+  defaultValue,
+}: {
+  setFormCompanyIdValue: (companyId: number) => void
+  defaultValue: number | undefined | null
+}) => {
   const [data, setData] = useState<CompaniesDataType[]>()
   const [loading, setLoading] = useState(false)
 
@@ -19,7 +29,7 @@ const AddAssignedCompanyId = ({setFormCompanyIdValue, defaultValue}: {setFormCom
   }, [])
 
   const handleChange = (value: string) => setFormCompanyIdValue(parseInt(value))
-  
+
   return (
     <Select
       loading={loading}
@@ -28,6 +38,7 @@ const AddAssignedCompanyId = ({setFormCompanyIdValue, defaultValue}: {setFormCom
       onChange={handleChange}
       options={flattenUserIdsData(data)}
     />
-)};
+  )
+}
 
-export default AddAssignedCompanyId;
+export default AddAssignedCompanyId

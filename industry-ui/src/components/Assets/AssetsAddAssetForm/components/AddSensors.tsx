@@ -1,74 +1,80 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import type { InputRef } from 'antd';
-import { Space, Input, Tag, Tooltip, theme } from 'antd';
+import React, { useEffect, useRef, useState } from 'react'
+import { PlusOutlined } from '@ant-design/icons'
+import type { InputRef } from 'antd'
+import { Space, Input, Tag, Tooltip, theme } from 'antd'
 
-const AddSensors = ({ setFormSensorsValue, defaultValue} : {setFormSensorsValue: (sensors: string[]) => void, defaultValue: string[] | null | undefined}) => {
-  const { token } = theme.useToken();
-  const [tags, setTags] = useState<string[]>(defaultValue ?? []);
-  const [inputVisible, setInputVisible] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [editInputIndex, setEditInputIndex] = useState(-1);
-  const [editInputValue, setEditInputValue] = useState('');
-  const inputRef = useRef<InputRef>(null);
-  const editInputRef = useRef<InputRef>(null);
+const AddSensors = ({
+  setFormSensorsValue,
+  defaultValue,
+}: {
+  setFormSensorsValue: (sensors: string[]) => void
+  defaultValue: string[] | null | undefined
+}) => {
+  const { token } = theme.useToken()
+  const [tags, setTags] = useState<string[]>(defaultValue ?? [])
+  const [inputVisible, setInputVisible] = useState(false)
+  const [inputValue, setInputValue] = useState('')
+  const [editInputIndex, setEditInputIndex] = useState(-1)
+  const [editInputValue, setEditInputValue] = useState('')
+  const inputRef = useRef<InputRef>(null)
+  const editInputRef = useRef<InputRef>(null)
 
   useEffect(() => {
     if (inputVisible) {
-      inputRef.current?.focus();
+      inputRef.current?.focus()
     }
-  }, [inputVisible]);
+  }, [inputVisible])
 
   useEffect(() => {
     setFormSensorsValue(tags)
   }, [tags, setFormSensorsValue])
 
   useEffect(() => {
-    editInputRef.current?.focus();
-  }, [inputValue]);
+    editInputRef.current?.focus()
+  }, [inputValue])
 
   const handleClose = (removedTag: string) => {
-    const newTags = tags.filter((tag) => tag !== removedTag);
-    setTags(newTags);
-  };
+    const newTags = tags.filter((tag) => tag !== removedTag)
+    setTags(newTags)
+  }
 
   const showInput = () => {
-    setInputVisible(true);
-  };
+    setInputVisible(true)
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+    setInputValue(e.target.value)
+  }
 
   const handleInputConfirm = () => {
     if (inputValue && tags.indexOf(inputValue) === -1) {
-      setTags([...tags, inputValue]);
+      setTags([...tags, inputValue])
     }
-    setInputVisible(false);
-    setInputValue('');
-  };
+    setInputVisible(false)
+    setInputValue('')
+  }
 
   const handleEditInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditInputValue(e.target.value);
-  };
+    setEditInputValue(e.target.value)
+  }
 
   const handleEditInputConfirm = () => {
-    const newTags = [...tags];
-    newTags[editInputIndex] = editInputValue;
-    setTags(newTags);
-    setEditInputIndex(-1);
-    setInputValue('');
-  };
+    const newTags = [...tags]
+    newTags[editInputIndex] = editInputValue
+    setTags(newTags)
+    setEditInputIndex(-1)
+    setInputValue('')
+  }
 
   const tagInputStyle: React.CSSProperties = {
     width: 78,
     verticalAlign: 'top',
-  };
+  }
 
   const tagPlusStyle: React.CSSProperties = {
     background: token.colorBgContainer,
     borderStyle: 'dashed',
-  };
+  }
 
   return (
     <Space size={[0, 8]} wrap>
@@ -86,9 +92,9 @@ const AddSensors = ({ setFormSensorsValue, defaultValue} : {setFormSensorsValue:
                 onBlur={handleEditInputConfirm}
                 onPressEnter={handleEditInputConfirm}
               />
-            );
+            )
           }
-          const isLongTag = tag.length > 20;
+          const isLongTag = tag.length > 20
           const tagElem = (
             <Tag
               key={tag}
@@ -99,23 +105,23 @@ const AddSensors = ({ setFormSensorsValue, defaultValue} : {setFormSensorsValue:
               <span
                 onDoubleClick={(e) => {
                   if (index !== 0) {
-                    setEditInputIndex(index);
-                    setEditInputValue(tag);
-                    e.preventDefault();
+                    setEditInputIndex(index)
+                    setEditInputValue(tag)
+                    e.preventDefault()
                   }
                 }}
               >
                 {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               </span>
             </Tag>
-          );
+          )
           return isLongTag ? (
             <Tooltip title={tag} key={tag}>
               {tagElem}
             </Tooltip>
           ) : (
             tagElem
-          );
+          )
         })}
       </Space>
       {inputVisible ? (
@@ -135,7 +141,7 @@ const AddSensors = ({ setFormSensorsValue, defaultValue} : {setFormSensorsValue:
         </Tag>
       )}
     </Space>
-  );
-};
+  )
+}
 
-export default AddSensors;
+export default AddSensors

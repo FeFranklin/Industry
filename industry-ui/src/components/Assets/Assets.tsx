@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import AssetsTable from './AssetsTable'
 import AssetsSidePanel from './AssetsSidePanel'
 import TableSkeleton from '../Loading/TableSkeleton'
-import { AssetsDataType } from '@/types/types';
+import { AssetsDataType } from '@/types/types'
 
 const Assets = () => {
   const [data, setData] = useState<AssetsDataType[] | null>(null)
@@ -25,8 +25,17 @@ const Assets = () => {
 
   return (
     <>
-      <AssetsSidePanel selectedItem={data[selectedItem]} openPanel={sidePanelOpen} setOpenPanel={setSidePanelOpen} />
-      <AssetsTable sidePanelOpen={sidePanelOpen} data={data} setSelectedItem={setSelectedItem} setSidePanelOpen={setSidePanelOpen}/>
+      <AssetsSidePanel
+        selectedItem={data[selectedItem]}
+        openPanel={sidePanelOpen}
+        setOpenPanel={setSidePanelOpen}
+      />
+      <AssetsTable
+        sidePanelOpen={sidePanelOpen}
+        data={data}
+        setSelectedItem={setSelectedItem}
+        setSidePanelOpen={setSidePanelOpen}
+      />
     </>
   )
 }

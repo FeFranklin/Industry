@@ -1,69 +1,68 @@
 export interface WorkorderDataType {
-  assetId: number;
-  assignedUserIds?: (number)[] | null;
-  checklist?: (ChecklistEntity)[] | null;
-  description: string;
-  id: number;
-  priority: string;
-  status: string;
-  title: string;
+  assetId: number
+  assignedUserIds?: number[] | null
+  checklist?: ChecklistEntity[] | null
+  description: string
+  id: number
+  priority: string
+  status: string
+  title: string
 }
 
 export interface ChecklistEntity {
-  completed: boolean;
-  task: string;
+  completed: boolean
+  task: string
 }
 
 export interface UsersDataType {
-  name: string;
-  email: string;
-  id: number;
-  unitId: number;
+  name: string
+  email: string
+  id: number
+  unitId: number
 }
 
 export interface UnitDataType {
-  companyId: number;
-  id: number;
-  name: string;
+  companyId: number
+  id: number
+  name: string
 }
 
-
 export interface CompaniesDataType {
-  name: string;
-  id: number;
+  name: string
+  id: number
 }
 
 export interface AssetsDataType {
-  assignedUserIds?: (number)[] | null;
-  companyId: number;
-  healthHistory?: (HealthHistoryEntity)[] | null;
-  healthscore: number;
-  id: number;
-  image: string;
-  metrics: Metrics;
-  model: string;
-  name: string;
-  sensors?: (string)[] | null;
-  specifications: Specifications;
-  status: string;
-  unitId: number;
+  assignedUserIds?: number[] | null
+  companyId: number
+  healthHistory?: HealthHistoryEntity[] | null
+  healthscore: number
+  id: number
+  image: string
+  metrics: Metrics
+  model: string
+  name: string
+  sensors?: string[] | null
+  specifications: Specifications
+  status: string
+  unitId: number
 }
 export interface HealthHistoryEntity {
-  status: string;
-  timestamp: string;
+  status: string
+  timestamp: string
 }
 export interface Metrics {
-  lastUptimeAt: string;
-  totalCollectsUptime: number;
-  totalUptime: number;
+  lastUptimeAt: string
+  totalCollectsUptime: number
+  totalUptime: number
 }
 export interface Specifications {
-  maxTemp: number;
+  maxTemp: number
 }
 
 export interface HealthHistoryEntity {
-  status: string;
-  timestamp: string;
+  status: string
+  timestamp: string
 }
 
 export enum HealthStatus {
@@ -71,29 +70,29 @@ export enum HealthStatus {
   inDowntime,
   inAlert,
   unplannedStop,
-  plannedStop
+  plannedStop,
 }
 
 export interface AssetFormProps {
-  onCancel: () => void,
-  openNotificaiton: (res: any, config: string) => void,
+  onCancel: () => void
+  openNotificaiton: (res: any, config: string) => void
   defaultValues: AssetsDataType | null
 }
 
 export enum WorkorderStatus {
-  inprogress = "processing",
-  completed = "success",
-  default = "default"
+  inprogress = 'processing',
+  completed = 'success',
+  default = 'default',
 }
 
 export enum WorkorderPriorityColours {
-  low = "lime",
-  medium = "blue",
-  high = "red"
+  low = 'lime',
+  medium = 'blue',
+  high = 'red',
 }
 
 export enum AssetsStatus {
-  inOperation = "processing",
-  inAlert = "error",
-  inDowntime = "warning"
+  inOperation = 'processing',
+  inAlert = 'error',
+  inDowntime = 'warning',
 }
