@@ -6,7 +6,7 @@ describe('Home', () => {
     act(() => {
       /* fire events that update state */
       render(<Home />)
-    });
+    })
 
     const mainContent = screen.getByTestId('main-content')
 

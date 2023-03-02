@@ -21,7 +21,6 @@ const customJestConfig = {
     '^@/types/(.*)$': '<rootDir>/src/types/$1',
 
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
-
   },
   testEnvironment: 'jest-environment-jsdom',
 }
