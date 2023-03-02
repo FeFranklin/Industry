@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag, Button, Badge, Typography, Col, Row, Tooltip, Modal, notification, Divider } from 'antd';
+import React, { useState, useRef } from 'react';
+import { Space, Table, Tag, Button, Badge, Typography, Tooltip, Modal, notification, Divider } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { AssetsDataType } from '@/types/types';
+import { AssetsDataType, AssetFormProps } from '@/types/types';
 import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
-import AssetsAddAssetForm from './AssetsAddAssetForm/AssetsAddAssetForm';
+import AssetForm from './AssetsAddAssetForm/AssetForm';
 
 enum Status {
   inOperation = "processing",
@@ -32,7 +32,9 @@ const AssetsTable = ({
   setSelectedItem: React.Dispatch<React.SetStateAction<number>>,
   setSidePanelOpen:React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-  const [openAddModal, setOpenAddModal] = useState<boolean>(false)
+  const [openFormModal, setOpenFormModal] = useState<boolean>(false)
+  const [assetInEdition, setAssetInEdition] = useState<AssetsDataType | null>(null)
+  const formRef = useRef<{clearForm: () => void}>()
   const [loading, setLoading] = useState(false)
   const [api, contextHolder] = notification.useNotification();
 
@@ -43,7 +45,10 @@ const AssetsTable = ({
       dataIndex: '',
       render: (_, record) => (
         <Tooltip title="Click here to edit this asset!">
-          <Link onClick={() => console.log(record)}><EditFilled /></Link>
+          <Link onClick={() => {
+            setOpenFormModal(true)
+            setAssetInEdition(record)
+          }}><EditFilled /></Link>
         </Tooltip>
       ),
     },
@@ -137,15 +142,18 @@ const AssetsTable = ({
     });
   }
 
-  const openAddNotification = (res: any) => {
+  const openNotificaiton = (res: any, method: string) => {
     let notificationDescription =  'Asset has been added!'
     let notificationIcon = <InfoCircleFilled style={{ color: '#389e0d' }} />
+    if (method === 'PUT') {
+      notificationDescription = 'Asset has been updated!'
+    }
     if (res.status > 299 || randomFailRequestMock()) {
       notificationDescription = 'Operation failed :( please try again later.'
       notificationIcon = <ExclamationCircleFilled style={{ color: '#FF0000' }} />
     }
     api.open({
-      message: 'Add Operation',
+      message: 'Operation',
       description: notificationDescription,
       icon: notificationIcon,
     });
@@ -175,22 +183,28 @@ const AssetsTable = ({
     .finally(() => setLoading(false))
   }
 
+  const handleCloseModal = () => {
+    formRef?.current?.clearForm()
+    setOpenFormModal(false)
+    setAssetInEdition(null)
+  }
+
   return (
   <>
     {contextHolder}
     <Modal
-      title="Adding new asset to the inventory!"
+      title={assetInEdition ? `Editing ${assetInEdition?.name}` : "Adding new asset to the inventory!"}
       centered
-      open={!!openAddModal}
+      open={!!openFormModal}
       footer={[]}
-      onCancel={() => setOpenAddModal(false)}
+      onCancel={handleCloseModal}
     >
-      <AssetsAddAssetForm openAddNotification={openAddNotification} onCancel={() => setOpenAddModal(false)} />
+      <AssetForm ref={formRef} defaultValues={assetInEdition} openNotificaiton={openNotificaiton} onCancel={handleCloseModal} />
     </Modal>
     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
       <Title level={2}>Assets</Title>
       <Tooltip title="Add new asset.">
-        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}} onClick={() => setOpenAddModal(true)}>Add new Asset</Button>
+        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}} onClick={() => setOpenFormModal(true)}>Add new Asset</Button>
       </Tooltip>
       <Table columns={columns} dataSource={data} />
     </Space>

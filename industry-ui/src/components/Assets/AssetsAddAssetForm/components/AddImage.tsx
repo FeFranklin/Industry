@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Modal, Upload } from 'antd';
 import type { RcFile, UploadProps } from 'antd/es/upload';
@@ -12,7 +12,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const AddImage = ({setFormImageValue}: {setFormImageValue: (image: any) => void}) => {
+const AddImage = ({setFormImageValue, defaultValue}: {setFormImageValue: (image: any) => void, defaultValue: string | undefined}) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
@@ -20,7 +20,18 @@ const AddImage = ({setFormImageValue}: {setFormImageValue: (image: any) => void}
 
   const handleCancel = () => setPreviewOpen(false);
 
+  useEffect(() => {
+    if (!!defaultValue) {
+      setFileList([{url: defaultValue, uid: '1', name: 'Default Image'}])
+    } else {
+      setFileList([])
+    }
+  }, [defaultValue])
+
   const handlePreview = async (file: UploadFile) => {
+    if (!!!defaultValue) {
+      return
+    }
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj as RcFile);
     }
@@ -49,6 +60,7 @@ const AddImage = ({setFormImageValue}: {setFormImageValue: (image: any) => void}
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
+        disabled={!!defaultValue}
       >
         {fileList.length >= 1 ? null : uploadButton}
       </Upload>

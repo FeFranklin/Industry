@@ -3,9 +3,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Space, Input, Tag, Tooltip, theme } from 'antd';
 
-const AddSensors = ({ setFormSensorsValue} : {setFormSensorsValue: (sensors: string[]) => void}) => {
+const AddSensors = ({ setFormSensorsValue, defaultValue} : {setFormSensorsValue: (sensors: string[]) => void, defaultValue: string[] | null | undefined}) => {
   const { token } = theme.useToken();
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(defaultValue ?? []);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [editInputIndex, setEditInputIndex] = useState(-1);

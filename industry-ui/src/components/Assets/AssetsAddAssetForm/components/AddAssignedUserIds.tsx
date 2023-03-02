@@ -5,7 +5,7 @@ import { UsersDataType } from '@/types/types';
 
 const flattenUserIdsData = (data: UsersDataType[] | undefined) => data?.map((user: UsersDataType) => ({label: user.name, value: user.id}))
 
-const AddAssignedUserIds = ({setFormUserIdsValue}: {setFormUserIdsValue: (userIds: number[]) => void}) => {
+const AddAssignedUserIds = ({setFormUserIdsValue, defaultValue}: {setFormUserIdsValue: (userIds: number[]) => void, defaultValue: (number)[] | null | undefined}) => {
   const [data, setData] = useState<UsersDataType[]>()
   const [loading, setLoading] = useState(false)
 
@@ -29,7 +29,7 @@ const AddAssignedUserIds = ({setFormUserIdsValue}: {setFormUserIdsValue: (userId
       loading={loading}
       style={{ width: '100%' }}
       placeholder="Please select"
-      defaultValue={[]}
+      defaultValue={defaultValue}
       onChange={handleChange}
       onDeselect={handleChange}
       options={flattenUserIdsData(data)}

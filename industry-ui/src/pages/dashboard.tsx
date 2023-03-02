@@ -41,7 +41,7 @@ const Dashboard = () => {
             </Content>
           </Layout>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2023 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>©2023 Created by Felipe Franklin</Footer>
       </Layout>
     </main>
   );

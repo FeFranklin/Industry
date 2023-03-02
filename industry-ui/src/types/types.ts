@@ -73,3 +73,9 @@ export enum HealthStatus {
   unplannedStop,
   plannedStop
 }
+
+export interface AssetFormProps {
+  onCancel: () => void,
+  openNotificaiton: (res: any, config: string) => void,
+  defaultValues: AssetsDataType | null
+}
