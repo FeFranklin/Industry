@@ -3,6 +3,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Modal, Upload } from 'antd'
 import type { RcFile, UploadProps } from 'antd/es/upload'
 import type { UploadFile } from 'antd/es/upload/interface'
+import Image from 'next/image'
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -78,7 +79,7 @@ const AddImage = ({
         footer={null}
         onCancel={handleCancel}
       >
-        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        <Image alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   )

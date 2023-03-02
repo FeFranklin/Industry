@@ -12,7 +12,7 @@ import {
   Divider,
 } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import { AssetsDataType, AssetsStatus } from '@/types/types'
+import { AssetsDataType, AssetsStatus, AssetsTableProps } from '@/types/types'
 import {
   EditFilled,
   DeleteOutlined,
@@ -37,12 +37,7 @@ const AssetsTable = ({
   sidePanelOpen,
   setSelectedItem,
   setSidePanelOpen,
-}: {
-  data: AssetsDataType[]
-  sidePanelOpen: boolean
-  setSelectedItem: React.Dispatch<React.SetStateAction<number>>
-  setSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>
-}) => {
+}: AssetsTableProps) => {
   const [openFormModal, setOpenFormModal] = useState<boolean>(false)
   const [assetInEdition, setAssetInEdition] = useState<AssetsDataType | null>(
     null
@@ -219,6 +214,8 @@ const AssetsTable = ({
     setAssetInEdition(null)
   }
 
+  const handleOpenModal = () => setOpenFormModal(true)
+
   return (
     <>
       {contextHolder}
@@ -251,7 +248,7 @@ const AssetsTable = ({
             type="primary"
             icon={<PlusCircleFilled />}
             className={styles.addItemButton}
-            onClick={() => setOpenFormModal(true)}
+            onClick={handleOpenModal}
           >
             Add new Asset
           </Button>

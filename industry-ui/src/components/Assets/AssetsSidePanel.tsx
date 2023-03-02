@@ -16,7 +16,8 @@ import {
 import SlidingPanel from 'react-sliding-side-panel'
 import moment from 'moment'
 import { AssetsHealthHistoryChart } from './AssetsHealthHistoryChart'
-import { AssetsDataType, HealthStatus } from '@/types/types'
+import { AssetsSidePanelProps, HealthStatus } from '@/types/types'
+import styles from '@/styles/AssetsSidePanel.module.scss'
 
 const { Title: TextTitle, Text } = Typography
 const { Panel } = Collapse
@@ -25,11 +26,7 @@ const AssetsSidePanel = ({
   openPanel,
   setOpenPanel,
   selectedItem,
-}: {
-  openPanel: boolean
-  setOpenPanel: React.Dispatch<React.SetStateAction<boolean>>
-  selectedItem: AssetsDataType
-}) => {
+}: AssetsSidePanelProps) => {
   const specifications = []
   const metrics = []
   if (selectedItem?.specifications) {
@@ -44,17 +41,17 @@ const AssetsSidePanel = ({
   }
   return (
     <SlidingPanel type={'right'} isOpen={openPanel} size={50}>
-      <div className="panel-container">
+      <div className={styles.sidepanelContainer}>
         <Button
           type="primary"
-          className="panel-button"
+          className={styles.sidepanelbutton}
           onClick={() => setOpenPanel(false)}
           danger
         >
           close
         </Button>
         <Image
-          className="panel-image-container"
+          className={styles.sidepanelimagecontainer}
           height={300}
           src={selectedItem?.image}
           alt="Image of the selected motor"
@@ -62,18 +59,18 @@ const AssetsSidePanel = ({
           placeholder={true}
         />
         <Divider>Data about {selectedItem?.name}</Divider>
-        <div className="specifications-container">
-          <div className="health-score">
+        <div className={styles.sidepanelspecificationscontainer}>
+          <div className={styles.sidepanelhealthscore}>
             <Progress
               type="dashboard"
               strokeLinecap="butt"
               percent={selectedItem?.healthscore}
             />
-            <Text type="secondary" style={{ textAlign: 'center' }}>
+            <Text type="secondary" className={styles.sidepanelhealthscore}>
               health score
             </Text>
           </div>
-          <div className="specifications">
+          <div className={styles.sidepanelspecifications}>
             <Descriptions title="Specifications">
               {selectedItem?.specifications &&
                 specifications?.map((spec) => (
@@ -85,10 +82,10 @@ const AssetsSidePanel = ({
           </div>
         </div>
         <Divider>Health history chart for {selectedItem?.name}</Divider>
-        <div className="health-history-chart-container">
+        <div>
           <AssetsHealthHistoryChart data={selectedItem?.healthHistory} />
         </div>
-        <div className="metrics-container">
+        <div className={styles.sidepanelmetricscontainer}>
           <Collapse>
             <Panel header="Click here to see more Metrics!" key="1">
               {metrics?.length > 0 && (
@@ -96,7 +93,7 @@ const AssetsSidePanel = ({
                   <Space
                     direction="vertical"
                     size="small"
-                    style={{ display: 'flex' }}
+                    className={styles.sidepanelmetricscontainerspace}
                   >
                     <Row gutter={8}>
                       <Col span={24}>

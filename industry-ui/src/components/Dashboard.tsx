@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import type { MenuProps } from 'antd'
 import { Layout, Menu, theme } from 'antd'
-// import styles from '@/styles/Home.module.css'
 import Assets from '@/components/Assets/Assets'
 import Companies from '@/components/Companies/Companies'
 import Units from '@/components/Units/Units'

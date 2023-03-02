@@ -79,6 +79,19 @@ export interface AssetFormProps {
   defaultValues: AssetsDataType | null
 }
 
+export interface AssetsTableProps {
+  data: AssetsDataType[]
+  sidePanelOpen: boolean
+  setSelectedItem: React.Dispatch<React.SetStateAction<number>>
+  setSidePanelOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface AssetsSidePanelProps {
+  openPanel: boolean
+  setOpenPanel: React.Dispatch<React.SetStateAction<boolean>>
+  selectedItem: AssetsDataType
+}
+
 export enum WorkorderStatus {
   inprogress = 'processing',
   completed = 'success',
