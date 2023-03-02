@@ -3,22 +3,15 @@ import { Table, Typography, Tag, Badge } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import TableSkeleton from '../Loading/TableSkeleton'
 import { WorkorderDataType } from '@/types/types';
+import { WorkorderStatus, WorkorderPriorityColours } from '@/types/types';
 
 const { Title } = Typography;
-enum Status {
-  inprogress = "processing",
-  completed = "success",
-  default = "default"
-}
+
 const getStatus = (status: string) => {
-  return Status[status.replace(/\s/g, "") as keyof typeof Status ?? 'default']
+  return WorkorderStatus[status.replace(/\s/g, "") as keyof typeof WorkorderStatus ?? 'default']
 }
-enum Priority {
-  low = "lime",
-  medium = "blue",
-  high = "red"
-}
-const getPriority = (priority: string) => Priority[priority as keyof typeof Priority ?? 'default']
+
+const getPriority = (priority: string) => WorkorderPriorityColours[priority as keyof typeof WorkorderPriorityColours ?? 'default']
 
 const Workorders = () => {
   const [data, setData] = useState<WorkorderDataType[]>()

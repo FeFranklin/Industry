@@ -1,23 +1,17 @@
 import React, { useState, useRef } from 'react';
 import { Space, Table, Tag, Button, Badge, Typography, Tooltip, Modal, notification, Divider } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { AssetsDataType, AssetFormProps } from '@/types/types';
+import { AssetsDataType, AssetsStatus } from '@/types/types';
 import { EditFilled, DeleteOutlined, ExclamationCircleFilled, InfoCircleFilled, PlusCircleFilled } from '@ant-design/icons';
 import AssetForm from './AssetsAddAssetForm/AssetForm';
-
-enum Status {
-  inOperation = "processing",
-  inAlert = "error",
-  inDowntime = "warning"
-}
+import styles from '@/styles/AssetsTable.module.scss'
+import { randomFailRequestMock } from '@/utils/utils';
 
 const { confirm } = Modal;
 
 const getStatus = (status: string) => {
-  return Status[status as keyof typeof Status]
+  return AssetsStatus[status as keyof typeof AssetsStatus]
 }
-
-const randomFailRequestMock = () => Math.random() > 0.5
 
 const { Title, Text, Link } = Typography;
 
@@ -201,10 +195,10 @@ const AssetsTable = ({
     >
       <AssetForm ref={formRef} defaultValues={assetInEdition} openNotificaiton={openNotificaiton} onCancel={handleCloseModal} />
     </Modal>
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <Space direction="vertical" size="middle" className={styles.assetsTableSpace}>
       <Title level={2}>Assets</Title>
       <Tooltip title="Add new asset.">
-        <Button type="primary" icon={<PlusCircleFilled />} style={{float: 'right'}} onClick={() => setOpenFormModal(true)}>Add new Asset</Button>
+        <Button type="primary" icon={<PlusCircleFilled />} className={styles.addItemButton} onClick={() => setOpenFormModal(true)}>Add new Asset</Button>
       </Tooltip>
       <Table columns={columns} dataSource={data} />
     </Space>

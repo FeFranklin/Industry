@@ -79,3 +79,21 @@ export interface AssetFormProps {
   openNotificaiton: (res: any, config: string) => void,
   defaultValues: AssetsDataType | null
 }
+
+export enum WorkorderStatus {
+  inprogress = "processing",
+  completed = "success",
+  default = "default"
+}
+
+export enum WorkorderPriorityColours {
+  low = "lime",
+  medium = "blue",
+  high = "red"
+}
+
+export enum AssetsStatus {
+  inOperation = "processing",
+  inAlert = "error",
+  inDowntime = "warning"
+}
