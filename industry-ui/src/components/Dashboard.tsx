@@ -24,7 +24,7 @@ const Dashboard = () => {
   const onChangeView = (itemKey: string) => setSelectedPage(itemKey)
 
   return (
-    <main className={styles.main}>
+    <main className={styles.main} data-testid="main-content">
       <Layout>
         <Header className="header">
           <div className="logo" />
