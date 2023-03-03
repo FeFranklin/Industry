@@ -67,6 +67,7 @@ Future Ideas:
     - [x] Enligh
     - [ ] Portuguese
 - [ ] Application State Manager with Redux
+- [ ] Filtering in tables
 - [ ] Responsiveness and Mobile friendly application
 
 <!-- CONTACT -->
