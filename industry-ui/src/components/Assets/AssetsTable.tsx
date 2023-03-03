@@ -198,7 +198,7 @@ const AssetsTable = ({
   const handleDelete = (record: AssetsDataType) => {
     setLoading(true)
     fetch(
-      `https://my-json-server.typicode.com/tractian/fake-api/assets/${record?.id}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_ADDR}assets/${record?.id}`,
       { method: 'DELETE' }
     )
       .then((res) => {

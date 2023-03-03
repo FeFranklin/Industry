@@ -12,7 +12,7 @@ const Units = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://my-json-server.typicode.com/tractian/fake-api/units')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_ADDR}units`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

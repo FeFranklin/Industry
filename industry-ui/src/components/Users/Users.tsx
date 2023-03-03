@@ -11,7 +11,7 @@ const Users = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://my-json-server.typicode.com/tractian/fake-api/users')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_ADDR}users`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

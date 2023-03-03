@@ -24,7 +24,7 @@ const Workorders = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://my-json-server.typicode.com/tractian/fake-api/workorders')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_ADDR}workorders`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

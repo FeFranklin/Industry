@@ -20,7 +20,7 @@ const AddAssignedCompanyId = ({
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://my-json-server.typicode.com/tractian/fake-api/companies')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_ADDR}companies`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

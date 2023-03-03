@@ -12,7 +12,7 @@ const Assets = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('https://my-json-server.typicode.com/tractian/fake-api/assets')
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_ADDR}assets`)
       .then((res) => res.json())
       .then((data) => {
         setData(data)

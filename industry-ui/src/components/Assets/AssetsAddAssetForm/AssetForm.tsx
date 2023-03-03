@@ -29,8 +29,8 @@ const AssetForm = forwardRef(
 
     const handleOnFinish = (values: any) => {
       setLoading(true)
-      let address =
-        'https://my-json-server.typicode.com/tractian/fake-api/assets/'
+      let address = process.env.NEXT_PUBLIC_API_BASE_ADDR + 
+        'assets/'
       let requestConfig = { method: 'POST', body: JSON.stringify(values) }
 
       if (!!defaultValues) {
